@@ -1,6 +1,6 @@
 #!/bin/sh
 
-pactl load-module module-null-sink sink_name="Main_Virtual_Sink" sink_properties=device.description="main-virtual-sink"
-pactl load-module module-loopback latency_msec=1 source=Main_Virtual_Sink.monitor sink=SINKNAMEHERE
-pactl load-module module-null-sink sink_name="Music_Virtual_Sink" sink_properties=device.description="music-virtual-sink" 
-pactl load-module module-loopback latency_msec=1 source=Music_Virtual_Sink.monitor sink=SINKNAMEHERE
+pactl load-module module-remap-sink sink_name=base_output master=$AUDIOOUTPUTDEVICENAMEHERE channels=2 master_channel_map=front-left,front-right channel_map=front-left,front-right remix=no;
+pacmd update-sink-proplist base_output device.description="Base_Sink";
+pactl load-module module-remap-sink sink_name=music_output master=$AUDIOOUTPUTDEVICENAMEHERE channels=2 master_channel_map=front-left,front-right channel_map=front-left,front-right remix=no; 
+pacmd update-sink-proplist music_output device.description="Music_Sink"
